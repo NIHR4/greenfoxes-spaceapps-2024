@@ -8,12 +8,23 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        'partial-fade': {
+          '0%': { opacity: '0'},
+          '100%': { opacity: '0.7'}
+        },
+      },
+      animation: {
+        'partial-fade': 'partial-fade 0.5s ease-in-out'
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animated')
+  ],
 };
 export default config;
