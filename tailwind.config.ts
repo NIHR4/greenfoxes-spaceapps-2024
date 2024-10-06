@@ -15,7 +15,7 @@ const config: Config = {
         },
       },
       animation: {
-        'partial-fade': 'partial-fade 0.5s ease-in-out'
+        'partial-fade': 'partial-fade 0.2s ease-in-out'
       },
       colors: {
         background: "var(--background)",
