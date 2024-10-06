@@ -1,6 +1,10 @@
 import Image from "next/image"
 import challengeLogo from "./space_apps_003.webp"
 import greenHouse from "./greenHouseEffectSmall.png"
+import CO2 from "./Co2Image.jpg"
+import energy from "./SustainableEnergy.jpg"
+import transport from "./SustanableTransport.jpeg"
+import plant from "./planting.jpg"
 
 export default function challenge(){
     return(
@@ -23,7 +27,7 @@ export default function challenge(){
                         width={248}
                     />
                 </div>
-                <div className="flex flex-row gap-6 px-20 pb-4">
+                <div className="flex flex-row gap-6 px-20 py-4">
                 <Image 
                         src={greenHouse}
                         alt="GreenHouse Effect Image"
@@ -40,10 +44,45 @@ export default function challenge(){
                             </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-6 px-20 bg-[#C0EBA6] pb-4">
-                    <h1 className="text-4xl font-bold pt-4">About CO2</h1>
-                    <div>
-                        <p>Carbon dioxide (CO2) is an important greenhouse gas released through activities like extracting and burning fossil fuels such as coal, oil, and natural gas, wildfires, and natural events like volcanic eruptions.</p>
+                <div className="flex flex-row gap-6 px-20 bg-[#C0EBA6] py-4">
+                    <div className="flex flex-col gap-6">
+                        <h1 className="text-4xl font-bold pt-4">About CO2</h1>
+                        <div>
+                            <p>Carbon dioxide (CO2) is an important greenhouse gas released through activities like extracting and burning fossil 
+                                fuels such as coal, oil, and natural gas, wildfires, and natural events like volcanic eruptions.</p>
+                        </div>
+                    </div>
+                    <Image 
+                        src={CO2}
+                        alt="Co2 Image"
+                        width={300}
+                    />
+                    
+                </div>
+                <div className="flex flex-col gap-6 px-20 py-4 items-center">
+                    <h1 className="text-4xl font-bold pt-4">What Can I Do to Help?</h1>
+                    <p>Reducing carbon emissions is crucial to mitigating climate change and protecting the planet for future generations. 
+                        Excess carbon dioxide and other greenhouse gases trap heat in the atmosphere, leading to global warming, rising sea levels, 
+                        and extreme weather events. By cutting emissions, we can slow down these harmful effects, improve air quality, protect ecosystems, 
+                        and promote a more sustainable, healthier environment. Taking action now helps reduce the risks of environmental disasters and ensures 
+                        a safer, more stable world for both people and nature.
+                    </p>
+                    <div className="flex flex-row gap-6 grow w-full ">    
+                        <Image
+                        src={energy}
+                        alt="Sustainable Energy image"
+                        width={400}
+                        />
+                        <Image 
+                        src={transport}
+                        alt="Transport Image"
+                        width={400}
+                        />
+                        <Image 
+                        src={plant}
+                        alt="Plant Image"
+                        width={400}
+                        />
                     </div>
                 </div>
             </div>
