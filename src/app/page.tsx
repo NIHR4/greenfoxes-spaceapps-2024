@@ -1,27 +1,13 @@
-
-
-import Image from "next/image";
-import SearchOverlay from './components/SearchOverlay';
-import { useMemo } from "react";
-import dynamic from "next/dynamic";
-import { CircularProgress } from "@mui/material";
-export default function Home() {
-  
-  const MapComponent = useMemo(() => dynamic(
-    () => import('./components/MapComponent'),
-    { 
-      loading: () => {
-        return <div className="h-full w-full flex justify-center items-center text-green-500">
-            <CircularProgress color="inherit"/>
-        </div>
-      },
-      ssr: false
-    }
-  ), [])
-  
+export default function Home(){
   return (
-    <div className="h-full w-full bg-white grow">
-      <MapComponent/>
-    </div>
+      <div style={{ padding: "20px", textAlign: "center" }}>
+          <h1>Welcome to Our Landing Page!</h1>
+          <p>
+            Explore the impact of human-caused emissions on our planet with our cutting-edge Greenhouse Gas Mapper. This interactive tool combines satellite and model-based datasets to provide a comprehensive view of greenhouse gas emissions. 
+            \n
+            Gain insights into how these emissions contribute to global warming and empower yourself with the knowledge to drive positive change in your community. Click the button below to dive into the map and see the data for yourself!
+          </p>
+          <a href="/application">Explore the Map</a>
+      </div>
   );
 }
