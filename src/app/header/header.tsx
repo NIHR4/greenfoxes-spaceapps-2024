@@ -3,9 +3,6 @@ import logo from "./GreenFoxesLogo.png"
 import Link from "next/link"
 import Image from "next/image"
 
-const menuItem = [
-    { text: "ABOUT US", href: "/aboutus"}
-]
 
 export default function Header(){
     return (
