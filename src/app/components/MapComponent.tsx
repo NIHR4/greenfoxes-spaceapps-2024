@@ -89,7 +89,26 @@ const MapComponent: React.FC = () => {
   )
 
   const [filter, setFilter] = useState<string>("net");
+  const [rawYearFilter, setRawYearFilter] = useState<number>(2020);
+  const [netYearFilter, setNetYearFilter] = useState<number>(2020);
 
+
+  useEffect(() => {
+    console.log("updating");
+    if(filter == 'net') {
+      fetch("/api/co2-tiles?year=" + netYearFilter).then(async r => {
+        let data = await r.json();
+        console.log("fetched net tile data: " + JSON.stringify(data))
+        setTileUrl(data[0].tiles[0]);
+      })
+    }else if(filter == 'raw'){
+      fetch("/api/co2-tiles-raw?year=" + rawYearFilter).then(async r => {
+        let data = await r.json();
+        console.log("fetched raw tile data: " + JSON.stringify(data))
+        setTileUrl(data[0].tiles[0]);
+      }) 
+    }
+  }, [filter, rawYearFilter, netYearFilter]);
   //This shouldve been a provider-context 
   //architecutre but alas nobody got time
   //for that lol
@@ -97,8 +116,8 @@ const MapComponent: React.FC = () => {
     <MapSettingsModal 
       menuOpen={open} 
       setterMenuOpen={setOpen}
-      onRawYearSelectorChanged={n => {}}
-      onNetYearSelectorChanged={n => {}}
+      onRawYearSelectorChanged={n => {setRawYearFilter(n)}}
+      onNetYearSelectorChanged={n => {setNetYearFilter(n)}}
       filter={filter}
       onFilterChanged={(newFilter) => setFilter(newFilter)}
     />

@@ -18,9 +18,14 @@ export default function MapSettingsModal(props : SettingsProps) {
     let initialFilter = null;
     if(props.filter == 'net') initialFilter = 1;
     else if(props.filter == 'raw') initialFilter = 2;
+    
     const [selectedSlider, setSelectedSlider] = useState<number | null>(initialFilter);
+    const [rawYear, setRawYear] = useState<number>(2020);
+    const [netYear, setNetYear] = useState<number>(2020);
 
     const handleSliderChange = (sliderNumber: number) => {
+        if(sliderNumber == 1)props.onFilterChanged("net");
+        if(sliderNumber == 2)props.onFilterChanged("raw");
         setSelectedSlider(sliderNumber === selectedSlider ? null : sliderNumber);
     };
 
@@ -33,6 +38,8 @@ export default function MapSettingsModal(props : SettingsProps) {
 
     const handleClose = () => {
         props.setterMenuOpen(false);
+        props.onNetYearSelectorChanged(netYear);
+        props.onRawYearSelectorChanged(rawYear);
         
     };
 
@@ -75,7 +82,7 @@ export default function MapSettingsModal(props : SettingsProps) {
                         {/* Render the CustomMarks for "Net" slider */}
                         {selectedSlider === 1 && (
                             <Box sx={{ textAlign: 'center', width: "100%" }}>
-                                <CustomMarks min={2015} max={2020} onValueChange={v => {props.onNetYearSelectorChanged(v)}} />
+                                <CustomMarks min={2015} max={2020} onValueChange={v => {setNetYear(v)}} />
                                 <Box sx={{ display: 'flex', marginTop: 0.5 }}>
                                     <Typography variant="body2" sx={{ width: '20px' }}>0</Typography>
                                     <GradientBox background={gradients.net}/>
@@ -87,7 +94,7 @@ export default function MapSettingsModal(props : SettingsProps) {
                         {/* Render the CustomMarks and GradientBox for "Raw" slider */}
                         {selectedSlider === 2 && (
                             <Box sx={{ textAlign: 'center', width: "100%" }}>
-                                <CustomMarks min={2000} max={2022} onValueChange={v => {props.onRawYearSelectorChanged(v)}}/>
+                                <CustomMarks min={2000} max={2022} onValueChange={v => {setRawYear(v)}}/>
                                 <Box sx={{ display: 'flex', marginTop: 0.5 }}>
                                     <Typography variant="body2" sx={{ width: '20px' }}>-10</Typography>
                                     <GradientBox background={gradients.raw} />
@@ -95,7 +102,7 @@ export default function MapSettingsModal(props : SettingsProps) {
                                 </Box>
                             </Box>
                         )}
-                        <Button onClick={handleClose}>Close Child Modal</Button>
+                        <Button onClick={handleClose}>Ok</Button>
                     </div>
                 </Box>
             }
