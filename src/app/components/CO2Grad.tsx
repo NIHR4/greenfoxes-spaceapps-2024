@@ -10,7 +10,7 @@ const GradientBox: React.FC<GradientBoxProps> = ({ background }) => {
       height: '5px', // Adjust thickness as needed
       background: background || 'none', // Use the passed background prop
       margin: '20px 0', // Add spacing if needed
-      width:'15%',
+      width:'100%',
       borderRadius: '2px', // Optional: round the corners
     }} />
   );

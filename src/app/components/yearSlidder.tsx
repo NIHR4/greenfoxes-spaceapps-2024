@@ -6,13 +6,15 @@ import Typography from '@mui/material/Typography';
 interface CustomMarksProps {
   min: number;
   max: number;
+  onValueChange : (v : number) =>  void;
 }
 
-const CustomMarks: React.FC<CustomMarksProps> = ({ min, max }) => {
+const CustomMarks: React.FC<CustomMarksProps> = ({ min, max, onValueChange}) => {
   const [val, setVal] = React.useState<number>(min);
   
   const handleChange = (_: Event, newValue: number | number[]) => {
     setVal(newValue as number);
+    onValueChange(newValue as number);
   };
 
   return (
