@@ -2,62 +2,46 @@ import { NextResponse } from 'next/server';
 
 const STAC_API_URL = "https://earth.gov/ghgcenter/api/stac";
 const RASTER_API_URL = "https://earth.gov/ghgcenter/api/raster";
-const collection_name = "odiac-ffco2-monthgrid-v2023";
+const collectionName = "odiac-ffco2-monthgrid-v2023";
 
 interface STACItem {
-  properties: {
-    start_datetime: string;
-  };
-  assets: Record<string, {
-    "raster:bands": Array<{
-      histogram: {
-        max: number;
-        min: number;
-      };
-    }>
-  }>;
-  collection: string;
-  id: string;
+    properties: {
+        start_datetime: string;
+    };
+    assets: Record<string, {
+        "raster:bands": Array<{
+            histogram: {
+                max: number;
+                min: number;
+            };
+        }>;
+    }>;
+    collection: string;
+    id: string;
 }
 
 interface STACResponse {
-  features: STACItem[];
-  context?: {
-    returned: number;
-  };
-  links: Array<{ rel: string; href: string }>;
+    features: STACItem[];
+    context?: {
+        returned: number;
+    };
+    links: Array<{ rel: string; href: string }>;
 }
 
 // Helper function to get item count
-async function getItemCount(collectionId: string, year?: string): Promise<number> {
+async function getItemCount(collectionId: string): Promise<number> {
     let count = 0;
     let itemsUrl = `${STAC_API_URL}/collections/${collectionId}/items`;
-    const cutoffDatetime = new Date(`${year}-01-01T00:00:00+00:00`);
 
     while (true) {
         const response = await fetch(itemsUrl);
-
         if (!response.ok) {
+            console.error("Error fetching item count");
             return 0; // or throw an error
         }
 
         const stac: STACResponse = await response.json();
-        
-        if (year){
-          for (const item of stac.features || []) {
-            const startDatetimeStr = item.properties?.start_datetime;
-            if (startDatetimeStr) {
-                const startDatetime = new Date(startDatetimeStr);
-                if (startDatetime < cutoffDatetime) {
-                    return count;
-                }
-                console.log(`${startDatetime} < ${cutoffDatetime}`);
-                
-                count += stac.context?.returned || 0;
-            }
-          }
-        }
-        
+        count += stac.context?.returned || 0;
 
         const nextLink = stac.links.find(link => link.rel === "next");
         if (!nextLink) break;
@@ -68,17 +52,15 @@ async function getItemCount(collectionId: string, year?: string): Promise<number
     return count;
 }
 
-// Helper function to get items from the collection, optionally filtered by year
-async function getItems(year?: string): Promise<Record<string, STACItem>> {
-    const numberOfItems = await getItemCount(collection_name, year);
-    const response = await fetch(`${STAC_API_URL}/collections/${collection_name}/items?limit=${numberOfItems}`);
+// Helper function to get items from the collection, filtered by year for December
+async function getItems(year: string): Promise<Record<string, STACItem>> {
+    const numberOfItems = await getItemCount(collectionName);
+    const response = await fetch(`${STAC_API_URL}/collections/${collectionName}/items?limit=${numberOfItems}`);
     const data: STACResponse = await response.json();
     let items = data.features;
 
-    // Filter items by year if a year is provided
-    if (year) {
-        items = items.filter(item => item.properties.start_datetime.startsWith(year));
-    }
+    // Filter items to include only those from December of the specified year
+    items = items.filter(item => item.properties.start_datetime.startsWith(`${year}-12`));
 
     // Create a dictionary indexed by start_datetime
     const itemsDict: Record<string, STACItem> = {};
@@ -91,22 +73,25 @@ async function getItems(year?: string): Promise<Record<string, STACItem>> {
 
 // Helper function to request raster API
 async function requestRasterAPI(items: Record<string, STACItem>, itemId: number): Promise<any> {
-    const assetName = "ff";
+    const assetName = "co2-emissions";
 
-    const rescaleValues = {
-        max: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.max,
-        min: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.min
+    const itemKeys = Object.keys(items);
+    if (itemKeys.length === 0) {
+        throw new Error("No items available for the specified year.");
+    }
+
+    var rescaleValues = {
+        max: items[itemKeys[itemId]].assets[assetName]["raster:bands"][0].histogram.max,
+        min: items[itemKeys[itemId]].assets[assetName]["raster:bands"][0].histogram.min
     };
 
-    // Hardcoded rescale values
-    const rescale = { max: 450, min: 0 };
-    const colorMap = "purd";
+    const colorMap = "rainbow";
 
-    const item = items[Object.keys(items)[itemId]];
+    const item = items[itemKeys[itemId]];
     const tileJsonUrl = `${RASTER_API_URL}/collections/${item.collection}/items/${item.id}/tilejson.json?` +
         `&assets=${assetName}` +
         `&color_formula=gamma+r+1.05&colormap_name=${colorMap}` +
-        `&rescale=${rescale.min},${rescale.max}`;
+        `&rescale=${rescaleValues.min},${rescaleValues.max}`;
 
     const response = await fetch(tileJsonUrl);
     if (!response.ok) {
@@ -119,11 +104,11 @@ async function requestRasterAPI(items: Record<string, STACItem>, itemId: number)
 // Main API handler function for CO2 flux data
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const year = searchParams.get('year') || undefined;  // Retrieve year from query parameters
+    const year = searchParams.get('year') || "2022";  // Retrieve year from query parameters, defaulting to 2022
 
     try {
         const items = await getItems(year);
-        const co2FluxData = [];
+        const co2FluxData: any[] = [];
 
         for (let i = 0; i < Object.keys(items).length; i++) {
             const co2Flux = await requestRasterAPI(items, i);
