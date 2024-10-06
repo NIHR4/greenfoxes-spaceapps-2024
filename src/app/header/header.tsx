@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="flex flex-row bg-[#FFFBE6] w-full justify-between items-center">
+    <header className="flex flex-row bg-[#FFFBE6] w-full justify-between items-center border-b-[1px]">
       <div className="flex flex-row items-center justify-between w-full  gap-x-10 px-24">
         <div className="flex flex-row items-center justify-center ">
           <Link href="/" className="flex flex-row justify-center items-center">
