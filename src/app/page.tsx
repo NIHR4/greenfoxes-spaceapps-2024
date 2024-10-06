@@ -1,4 +1,3 @@
-import bgImage from "./resources/bgImage.png"
 import spaceAppsLogo from "./resources/space_apps_003.webp"
 import greenhouse from "./resources/Greenhouse.png"
 import solution from "./resources/Solution.png"

@@ -80,7 +80,7 @@ async function requestRasterAPI(items: Record<string, STACItem>, itemId: number)
         throw new Error("No items available for the specified year.");
     }
 
-    var rescaleValues = {
+    const rescaleValues = {
         max: items[itemKeys[itemId]].assets[assetName]["raster:bands"][0].histogram.max,
         min: items[itemKeys[itemId]].assets[assetName]["raster:bands"][0].histogram.min
     };

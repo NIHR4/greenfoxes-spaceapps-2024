@@ -1,8 +1,7 @@
-import { Box, Button, Checkbox, FormControlLabel, IconButton, Modal, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, Modal, Typography } from '@mui/material';
 import GradientBox from './CO2Grad';
 import CustomMarks from './yearSlidder';
 import React, { useState } from 'react';
-import { unmountComponentAtNode } from '@react-three/fiber';
 
 interface SettingsProps {
     menuOpen: boolean

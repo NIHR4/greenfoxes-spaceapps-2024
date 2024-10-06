@@ -1,7 +1,5 @@
 
 
-import Image from "next/image";
-import SearchOverlay from '../components/SearchOverlay';
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { CircularProgress } from "@mui/material";

@@ -77,10 +77,10 @@ async function getItems(year?: string): Promise<Record<string, STACItem>> {
 async function requestRasterAPI(items: Record<string, STACItem>, itemId: number): Promise<any> {
     const assetName = "ff";
 
-    const rescaleValues = {
+    /*const rescaleValues = {
         max: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.max,
         min: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.min
-    };
+    };*/
 
     // Hardcoded rescale values
     const rescale = { max: 450, min: 0 };

@@ -5,15 +5,12 @@ import "leaflet-defaulticon-compatibility";
 import SettingsIcon from '@mui/icons-material/Settings';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 
 import L from 'leaflet';
 import SearchOverlay from './SearchOverlay';
 import ExploreIcon from '@mui/icons-material/Explore';
-import { Box, Button, Checkbox, FormControlLabel, IconButton, Modal, Typography } from '@mui/material';
-import CustomMarks from './yearSlidder';
-import { CheckBox } from '@mui/icons-material';
-import GradientBox from './CO2Grad';
+import { IconButton } from '@mui/material';
 import MapSettingsModal from './MapSettingsModal';
 
 
@@ -37,7 +34,7 @@ const MapComponent: React.FC = () => {
   //Fetch tile data
   useEffect(() => {
     fetch("/api/co2-tiles?year=2020").then(async r => {
-      let data = await r.json();
+      const data = await r.json();
       console.log("fetched tile data: " + JSON.stringify(data))
       setTileUrl(data[0].tiles[0]);
     })
@@ -78,14 +75,14 @@ const MapComponent: React.FC = () => {
 
         <div className="leaflet-top leaflet-right">
           <div className='leaflet-control leaflet-bar'>
-            <button className='w-12 h-12 bg-white' onClick={(e) => handleOpen()}>
+            <button className='w-12 h-12 bg-white' onClick={() => handleOpen()}>
               <SettingsIcon />
             </button>
           </div>
         </div>
 
       </MapContainer>
-    ), [tileUrl]
+    ), [tileUrl, isSearching]
   )
 
   const [filter, setFilter] = useState<string>("net");
@@ -97,13 +94,13 @@ const MapComponent: React.FC = () => {
     console.log("updating");
     if(filter == 'net') {
       fetch("/api/co2-tiles?year=" + netYearFilter).then(async r => {
-        let data = await r.json();
+        const data = await r.json();
         console.log("fetched net tile data: " + JSON.stringify(data))
         setTileUrl(data[0].tiles[0]);
       })
     }else if(filter == 'raw'){
       fetch("/api/co2-tiles-raw?year=" + rawYearFilter).then(async r => {
-        let data = await r.json();
+        const data = await r.json();
         console.log("fetched raw tile data: " + JSON.stringify(data))
         setTileUrl(data[0].tiles[0]);
       }) 
@@ -113,13 +110,13 @@ const MapComponent: React.FC = () => {
   //architecutre but alas nobody got time
   //for that lol
   return <>
-    <MapSettingsModal 
+    <MapSettingsModal
       menuOpen={open} 
       setterMenuOpen={setOpen}
-      onRawYearSelectorChanged={n => {setRawYearFilter(n)}}
-      onNetYearSelectorChanged={n => {setNetYearFilter(n)}}
+      onRawYearSelectorChanged={(n : number) => {setRawYearFilter(n)}}
+      onNetYearSelectorChanged={(n : number) => {setNetYearFilter(n)}}
       filter={filter}
-      onFilterChanged={(newFilter) => setFilter(newFilter)}
+      onFilterChanged={(newFilter : any) => setFilter(newFilter)}
     />
     {isSearching ? <SearchOverlay setter={setIsSearching} mapControl={map} /> : null}
     {displayMap}
