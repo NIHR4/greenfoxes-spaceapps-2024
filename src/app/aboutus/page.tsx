@@ -1,5 +1,5 @@
-import Banner from '../components/AboutBanner';
-import TeamMembers from '../components/Team'; 
+import Banner from './AboutBanner';
+import TeamMembers from './Team'; 
 import Prueba from './GREENFOXES.jpg'
 export default function about() {
     return (    
