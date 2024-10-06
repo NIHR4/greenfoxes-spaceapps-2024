@@ -18,6 +18,7 @@ const MapComponent: React.FC = () => {
     { isSearching ? <SearchOverlay setter={setIsSearching}/> : null }
     <MapContainer
       // key={isSearching ? 'searching' : 'not-searching'} //force re-rendering
+      
       center={[0, -0.09]}
       zoom={1.5}
       dragging={!isSearching}

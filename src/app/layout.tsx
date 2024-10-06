@@ -18,12 +18,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${arimo.className} antialiased`}
+        className={`${arimo.className} antialiased h-screen flex flex-col`}
       >
-        <div className="w-full z-10">
           <Header/>
-        </div>
-        {children}
+          {children}
       </body>
     </html>
   );

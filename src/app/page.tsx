@@ -11,7 +11,7 @@ export default function Home() {
     () => import('./components/MapComponent'),
     { 
       loading: () => {
-        return <div className="h-screen w-full flex justify-center items-center text-green-500">
+        return <div className="h-full w-full flex justify-center items-center text-green-500">
             <CircularProgress color="inherit"/>
         </div>
       },
@@ -20,7 +20,7 @@ export default function Home() {
   ), [])
   
   return (
-    <div className="h-screen w-full bg-white">
+    <div className="h-full w-full bg-white grow">
       <MapComponent/>
     </div>
   );

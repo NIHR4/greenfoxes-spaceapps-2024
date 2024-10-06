@@ -15,7 +15,7 @@ const SearchOverlay = (props: { setter: React.Dispatch<React.SetStateAction<bool
 
     return (
         <div
-            className="w-screen h-screen absolute bg-white bg-opacity-70 animate-partial-fade z-[2000] flex items-center"
+            className="top-0 left-0 w-screen h-full absolute bg-white bg-opacity-70 animate-partial-fade z-[2000] flex items-center"
             onClick={() => props.setter(false)} // Close overlay on background click
         >
             <input
