@@ -3,7 +3,7 @@ import TeamMembers from './Team';
 import Miembro1 from './Andre.jpg';
 import Miembro2 from './Daniel.jpg';
 import Miembro3 from './dahir.jpg';
-import Miembro4 from './FotoGigid.jpg';
+import Miembro4 from './Gigid.jpg';
 import Miembro5 from './Pol.jpg'
 export default function about() {
     return (    
