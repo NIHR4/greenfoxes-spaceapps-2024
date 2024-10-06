@@ -22,9 +22,12 @@ export default function Home(){
                 to drive positive change in your community. Click the button below to dive into the map and see the data for yourself!
               </p>
             </div>
-            <div className="bg-[#FCCD2A] w-fit items-center justify-center py-3 px-9 rounded-xl">
-              <a href="/application" className="font-bold">MAP</a>
-            </div>
+            <a href="/application">
+              <div className="bg-[#FCCD2A] w-fit items-center justify-center py-3 px-9 rounded-xl font-bold">
+                MAP
+              </div>
+            </a>
+              
           </div>
         <div className="flex bg-[#347928] w-full justify-center py-5 mt-4">
             <h1 className="text-white text-3xl">Explore</h1>
