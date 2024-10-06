@@ -1,6 +1,10 @@
 import Banner from './AboutBanner';
 import TeamMembers from './Team'; 
-import Prueba from './GREENFOXES.jpg'
+import Miembro1 from './Andre.jpg';
+import Miembro2 from './Daniel.jpg';
+import Miembro3 from './dahir.jpg';
+import Miembro4 from './FotoGigid.jpg';
+import Miembro5 from './Pol.jpg'
 export default function about() {
     return (    
     <div className="h-screen w-full bg-white">
@@ -13,23 +17,23 @@ export default function about() {
             animate-fade-down animate-ease-in-out'>
                 <TeamMembers
                     name="Andre Schiaffino"
-                    imgSrc={Prueba}
+                    imgSrc={Miembro1}
                 />
                 <TeamMembers
                     name="Daniel Aceves"
-                    imgSrc={Prueba}
+                    imgSrc={Miembro2}
                 />
                 <TeamMembers
                     name="Dahir Velazquez"
-                    imgSrc={Prueba}
+                    imgSrc={Miembro3}
                 />
                 <TeamMembers
                     name="Gigid He"
-                    imgSrc={Prueba}
+                    imgSrc={Miembro4}
                 />
                 <TeamMembers
                     name="Paul Orozco"
-                    imgSrc={Prueba}
+                    imgSrc={Miembro5}
                 />
             </div>
         </div>
