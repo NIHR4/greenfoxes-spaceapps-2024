@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./header/header"
-import {Arimo} from "next/font/google"
+import {Urbanist} from "next/font/google"
 
-const arimo = Arimo({subsets:['latin']})
+const urbanist = Urbanist({subsets:['latin']})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${arimo.className} antialiased h-screen flex flex-col`}
+        className={`${urbanist.className} antialiased h-screen flex flex-col`}
       >
           <Header/>
           {children}
