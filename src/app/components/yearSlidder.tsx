@@ -3,68 +3,61 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 
-const MAX = 2020;
-const MIN = 2015;
-const marks = [
-  {
-    value: MIN,
-    label: '',
-  },
-  {
-    value: MAX,
-    label: '',
-  },
-];
+interface CustomMarksProps {
+  min: number;
+  max: number;
+}
 
-export default function CustomMarks() {
-  const [val, setVal] = React.useState<number>(MIN);
+const CustomMarks: React.FC<CustomMarksProps> = ({ min, max }) => {
+  const [val, setVal] = React.useState<number>(min);
   
   const handleChange = (_: Event, newValue: number | number[]) => {
     setVal(newValue as number);
   };
 
   return (
-    <Box sx={{ width: 250 }}>
+    <Box sx={{ width: 250, marginBottom: 2 }}>
       <Slider
-        marks={marks}
-        step={1}
+        step={1} // Adjust step if needed
         value={val}
         valueLabelDisplay="auto"
-        min={MIN}
-        max={MAX}
+        min={min}
+        max={max}
         onChange={handleChange}
         sx={{
-          color: 'primary.main', // Change the slider color here
+          color: '#C0EBA6', // Slider track color
           '& .MuiSlider-thumb': {
-            backgroundColor: '#347928', // Change the thumb color here
+            backgroundColor: '#347928', // Thumb color
             '&:hover': {
-              backgroundColor: '#2E5B22', // Change thumb color on hover
+              backgroundColor: '#2E5B22', // Thumb color on hover (darker shade)
             },
           },
           '& .MuiSlider-track': {
-            backgroundColor: '#347928', // Change the track color here
+            backgroundColor: '#C0EBA6', // Track color
           },
           '& .MuiSlider-rail': {
-            backgroundColor: '#347928', // Change the rail color here
+            backgroundColor: 'rgba(192, 235, 166, 0.5)', // Rail color (lighter shade)
           },
         }}
       />
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography
           variant="body2"
-          onClick={() => setVal(MIN)}
+          onClick={() => setVal(min)}
           sx={{ cursor: 'pointer' }}
         >
-          {MIN} min
+          {min} min
         </Typography>
         <Typography
           variant="body2"
-          onClick={() => setVal(MAX)}
+          onClick={() => setVal(max)}
           sx={{ cursor: 'pointer' }}
         >
-          {MAX} max
+          {max} max
         </Typography>
       </Box>
     </Box>
   );
-}
+};
+
+export default CustomMarks;
