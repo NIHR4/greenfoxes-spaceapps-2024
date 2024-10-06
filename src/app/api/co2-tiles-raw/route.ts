@@ -30,6 +30,7 @@ interface STACResponse {
 
 // Helper function to get item count
 async function getItemCount(collectionId: string, year?: string): Promise<number> {
+    console.log("Counting items");
     let count = 0;
     let itemsUrl = `${STAC_API_URL}/collections/${collectionId}/items`;
     const cutoffDatetime = new Date(`${year}-01-01T00:00:00+00:00`);
@@ -42,7 +43,7 @@ async function getItemCount(collectionId: string, year?: string): Promise<number
         }
 
         const stac: STACResponse = await response.json();
-        
+        /*
         if (year){
           for (const item of stac.features || []) {
             const startDatetimeStr = item.properties?.start_datetime;
@@ -57,8 +58,11 @@ async function getItemCount(collectionId: string, year?: string): Promise<number
             }
           }
         }
-        
-
+        else{
+          count += stac.context?.returned || 0;
+        }
+        */
+        count += stac.context?.returned || 0;
         const nextLink = stac.links.find(link => link.rel === "next");
         if (!nextLink) break;
 
@@ -70,6 +74,7 @@ async function getItemCount(collectionId: string, year?: string): Promise<number
 
 // Helper function to get items from the collection, optionally filtered by year
 async function getItems(year?: string): Promise<Record<string, STACItem>> {
+    console.log("getting items");
     const numberOfItems = await getItemCount(collection_name, year);
     const response = await fetch(`${STAC_API_URL}/collections/${collection_name}/items?limit=${numberOfItems}`);
     const data: STACResponse = await response.json();
@@ -84,6 +89,7 @@ async function getItems(year?: string): Promise<Record<string, STACItem>> {
     const itemsDict: Record<string, STACItem> = {};
     items.forEach(item => {
         itemsDict[item.properties.start_datetime] = item;
+        console.log(item)
     });
 
     return itemsDict;
@@ -91,16 +97,16 @@ async function getItems(year?: string): Promise<Record<string, STACItem>> {
 
 // Helper function to request raster API
 async function requestRasterAPI(items: Record<string, STACItem>, itemId: number): Promise<any> {
-    const assetName = "ff";
+    console.log("API");
+    const assetName = "co2-emissions";
 
-    const rescaleValues = {
+    var rescale = {
         max: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.max,
         min: items[Object.keys(items)[0]].assets[assetName]["raster:bands"][0].histogram.min
     };
 
-    // Hardcoded rescale values
-    const rescale = { max: 450, min: 0 };
-    const colorMap = "purd";
+    const colorMap = "rainbow"
+    rescale = { max: 450, min: 0 };
 
     const item = items[Object.keys(items)[itemId]];
     const tileJsonUrl = `${RASTER_API_URL}/collections/${item.collection}/items/${item.id}/tilejson.json?` +
