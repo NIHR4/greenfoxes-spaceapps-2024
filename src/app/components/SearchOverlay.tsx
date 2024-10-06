@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import SuggestInput from "./SuggestInput";
 import L from 'leaflet';
 import opencage from 'opencage-api-client';
+import { countries } from "countries-list";
 
 interface SearchOverlayProps {
     setter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +13,7 @@ interface SearchOverlayProps {
 
 const SearchOverlay = (props: SearchOverlayProps) => {
     const [searchParam, setSearchParam] = useState<string>("");
+    const suggestions = Object.values(countries).map(country => country.name);
 
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Escape") props.setter(false);
@@ -50,7 +52,7 @@ const SearchOverlay = (props: SearchOverlayProps) => {
                     console.log("Updated search param: " + str);
                     setSearchParam(str);
                 }}
-                suggestions={[]} // OpenCage doesn't provide suggestions directly; use an external source if needed
+                suggestions={suggestions} // OpenCage doesn't provide suggestions directly; use an external source if needed
             />
         </div>
     );
