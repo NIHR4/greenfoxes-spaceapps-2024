@@ -16,7 +16,7 @@ export default function Header() {
         </div>
         <div className="items-center justify-center align-middle pr-4">
           <nav className="flex gap-x-8 border-x-[1px] border-black px-4">
-            <Link href={"/aboutUs"} className="text-xl text-[#347928] font-bold">
+            <Link href={"/aboutus"} className="text-xl text-[#347928] font-bold">
               About Us
             </Link>
           </nav>
