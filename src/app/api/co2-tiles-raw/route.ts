@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+export const maxDuration = 45; // This function can run for a maximum of 30 seconds
+export const dynamic = 'force-dynamic';
+
 
 const STAC_API_URL = "https://earth.gov/ghgcenter/api/stac";
 const RASTER_API_URL = "https://earth.gov/ghgcenter/api/raster";
