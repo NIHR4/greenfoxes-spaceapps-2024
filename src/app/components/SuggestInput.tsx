@@ -41,6 +41,7 @@ export default function SuggestInput(props: InputProps) {
             if(res.length > 0) {
                 setSuggestedText("");
                 setText(res[0].item);
+                props.onChange(res[0].item);
             }else{
                 
             }
