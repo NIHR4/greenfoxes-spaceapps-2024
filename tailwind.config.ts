@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        'partial-fade': {
+          '0%': { opacity: '0'},
+          '100%': { opacity: '0.7'}
+        },
+      },
+      animation: {
+        'partial-fade': 'partial-fade 0.2s ease-in-out'
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -15,7 +24,6 @@ const config: Config = {
     },
   },
   plugins: [
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('tailwindcss-animated')
   ],
 };
